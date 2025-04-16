@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from auth.models import UserInDB
 from auth.security import get_current_user
 from db import get_db
+from .crud import create_statement
 from .inference import get_predictor
 from .models import PatientStatement
 
@@ -17,4 +18,5 @@ def predict_disorder(
         db: Session = Depends(get_db)
 ):
     predicted_disorder = get_predictor().predict(data.statement)
-    return {"predicted_disorder": predicted_disorder}
+    created_statement = create_statement(db, user.id, data.statement, predicted_disorder)
+    return {"data": created_statement}
