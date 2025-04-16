@@ -19,4 +19,4 @@ def predict_disorder(
 ):
     predicted_disorder = get_predictor().predict(data.statement)
     created_statement = create_statement(db, user.id, data.statement, predicted_disorder)
-    return {"data": created_statement}
+    return created_statement
