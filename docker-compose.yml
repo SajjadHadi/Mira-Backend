@@ -44,21 +44,5 @@ services:
       retries: 5
       timeout: 5s
 
-  migration:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: [ "python3", "app/migrations/init_db.py" ]
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_HOST=${MYSQL_HOST}
-      - MYSQL_PORT=${MYSQL_PORT}
-    depends_on:
-      mysql:
-        condition: service_healthy
-
 volumes:
   mysql_data:

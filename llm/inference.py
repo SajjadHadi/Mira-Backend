@@ -54,13 +54,17 @@ class MentalDisorderPredictor:
         return disorder
 
 
+# Global variable (Singleton Implementation)
 predictor = None
 
 
-def get_predictor():
+def set_predictor():
     global predictor
     if predictor is None:
         predictor = MentalDisorderPredictor()
+
+
+def get_predictor():
     return predictor
 
 

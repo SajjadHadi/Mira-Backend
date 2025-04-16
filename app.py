@@ -2,27 +2,24 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from models.inference import get_predictor, clear_predictor
-
-llm_models = {}
+from auth.routes import router as auth_router
+from llm.inference import clear_predictor, set_predictor
+from llm.routes import router as llm_router
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    llm_models["mdd_v1"] = get_predictor()
+    set_predictor()
     yield
-    llm_models.clear()
     clear_predictor()
 
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(title="Mental Disorder Detection API", lifespan=lifespan)
+
+app.include_router(auth_router)
+app.include_router(llm_router)
 
 
 @app.get("/")
-async def root():
-    disorders = llm_models["mdd_v1"].predict("""About to start university freak outs This will be my third major attempt at starting a university degree. Each previous attempt i have had panic attacks and random freak outs which caused me to miss lectures and not submit work.
-
-Basically the worry of failure holds me back. And the worry of worrying is holding me back. I keep expecting to fail and therefore fail. I have zero self esteem.
-
-No idea why im posting this. Just scared and don't want to keep bothering my housemates with my nonsense.""")
-    return disorders
+def read_root():
+    return {"message": "Welcome to the Mental Disorder Detection API"}
