@@ -62,8 +62,8 @@ MYSQL_ROOT_PASSWORD=root_password
 
 # Hugging Face / Model
 HF_TOKEN=your_huggingface_token
-BASE_MODEL=your_base_model_id            # e.g. meta-llama/Llama-2-7b
-FINE_TUNED_MODEL=your_fine_tuned_model_id
+BASE_MODEL=Qwen/Qwen2.5-0.5B
+FINE_TUNED_MODEL=sajjadhadi/Mental-Disorder-Detection-Qwen2.5-0.5B-v1
 
 # Auth
 JWT_SECRET=your_jwt_secret_key
