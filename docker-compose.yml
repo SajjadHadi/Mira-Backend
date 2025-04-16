@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - ${HOST_PORT}:${CONTAINER_PORT}
+      - ${APP_HOST_PORT}:${APP_CONTAINER_PORT}
     environment:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
