@@ -4,7 +4,7 @@ import os
 load_dotenv()
 
 class Settings:
-    APP_PORT = int(os.getenv("CONTAINER_PORT", 8000))
+    APP_PORT = int(os.getenv("APP_PORT", 8000))
     MYSQL_USER = os.getenv("MYSQL_USER")
     MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
     MYSQL_ROOT_PASSWORD = os.getenv("MYSQL_ROOT_PASSWORD")

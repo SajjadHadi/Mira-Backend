@@ -16,7 +16,5 @@ def predict_disorder(
         user: UserInDB = Depends(get_current_user),
         db: Session = Depends(get_db)
 ):
-    predictor = get_predictor()
-    predicted_disorder = predictor.multi_predict(data.statement)
-
+    predicted_disorder = get_predictor().predict(data.statement)
     return {"predicted_disorder": predicted_disorder}

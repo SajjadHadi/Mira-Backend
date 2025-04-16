@@ -1,10 +1,11 @@
+version: '3.8'
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - ${APP_HOST_PORT}:${APP_CONTAINER_PORT}
+      - ${APP_PORT}:${APP_PORT}
     environment:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
@@ -12,9 +13,11 @@ services:
       - MYSQL_HOST=${MYSQL_HOST}
       - MYSQL_PORT=${MYSQL_PORT}
       - HF_TOKEN=${HF_TOKEN}
-      - MODEL_NAME=${MODEL_NAME}
+      - BASE_MODEL=${BASE_MODEL}
+      - FINE_TUNED_MODEL=${FINE_TUNED_MODEL}
       - JWT_SECRET=${JWT_SECRET}
       - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES}
+      - SQLALCHEMY_DATABASE_URL=mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}
     depends_on:
       mysql:
         condition: service_healthy
@@ -23,7 +26,7 @@ services:
         reservations:
           devices:
             - driver: nvidia
-              capabilities: [ gpu ]
+              capabilities: [gpu]
     volumes:
       - .:/app
 
@@ -39,7 +42,7 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       retries: 5
       timeout: 5s

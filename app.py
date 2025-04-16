@@ -1,14 +1,22 @@
+import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
 from auth.routes import router as auth_router
+from db import check_database
 from llm.inference import clear_predictor, set_predictor
 from llm.routes import router as llm_router
+from migrations.runner import run_migrations
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    run_migrations()
+    check_database()
     set_predictor()
     yield
     clear_predictor()
