@@ -1,3 +1,6 @@
+from datetime import datetime
+from typing import List
+
 from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, JSON
 from sqlalchemy.orm import relationship
@@ -19,3 +22,19 @@ class Statement(Base):
     created_at = Column(DateTime, nullable=False)
 
     user = relationship("User", back_populates="statements")
+
+
+class StatementResponse(BaseModel):
+    id: int
+    user_id: int
+    statement: str
+    disorders: str
+    created_at: datetime
+
+    class Config:
+        orm_mode = True
+
+
+class StatementListResponse(BaseModel):
+    total: int
+    statements: List[StatementResponse]
