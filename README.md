@@ -123,9 +123,12 @@ Content-Type: application/json
 
 ```http
 POST /auth/login
-Content-Type: application/x-www-form-urlencoded
+Content-Type: application/json
 
-username=user&password=pass
+{
+  "username": "user",
+  "password": "pass"
+}
 ```
 
 Response:
